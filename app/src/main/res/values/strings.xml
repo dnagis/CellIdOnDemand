@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CellIdOnDemand</string>
+    <string name="bouton_text">default_text</string>
+    <string name="bouton_text2">default_text2</string>
 </resources>
