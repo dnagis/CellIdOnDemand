@@ -25,8 +25,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
         public void actionBouton(View view) {
-            TextView monTextView = (TextView)findViewById(R.id.champ_texte);
-            TextView monTextView2 = (TextView)findViewById(R.id.champ_texte2);
+            TextView allcellinfoTextView = (TextView)findViewById(R.id.text_cellinfo);
+            TextView cellidTextView = (TextView)findViewById(R.id.text_cellid);
+            TextView cellinfosizeTextView = (TextView)findViewById(R.id.text_n_cells);
             ContentValues values = new ContentValues();
 
 
@@ -48,22 +49,28 @@ public class MainActivity extends Activity {
 
             if (mode_avion != 1) {
                 List<CellInfo> cellinfo = telph.getAllCellInfo();
-                CellInfo cell0 = cellinfo.get(0);
-                monTextView.setText(cell0.toString());
+                //dans le métro quand cartes sims activées mais aucun signal ça plante... je suspecte soit cellinfo null soit size=0
+                if (cellinfo != null) {
+                    cellinfosizeTextView.setText(String.valueOf(cellinfo.size()));
+                    CellInfo cell0 = cellinfo.get(0);
+                    allcellinfoTextView.setText(cell0.toString());
 
+                    if (cell0 instanceof CellInfoGsm) {
+                        cellid = ((CellInfoGsm) cell0).getCellIdentity().getCid();
+                    } else if (cell0 instanceof CellInfoCdma) {
+                        cellid = ((CellInfoCdma) cell0).getCellIdentity().getBasestationId();
+                    } else if (cell0 instanceof CellInfoLte) {
+                        cellid = ((CellInfoLte) cell0).getCellIdentity().getCi();
+                    } else if (cell0 instanceof CellInfoWcdma) {
+                        cellid = ((CellInfoWcdma) cell0).getCellIdentity().getCid();
+                    }
 
-                if (cell0 instanceof CellInfoGsm) {
-                    cellid = ((CellInfoGsm) cell0).getCellIdentity().getCid();
-                } else if (cell0 instanceof CellInfoCdma) {
-                    cellid = ((CellInfoCdma) cell0).getCellIdentity().getBasestationId();
-                } else if (cell0 instanceof CellInfoLte) {
-                    cellid = ((CellInfoLte) cell0).getCellIdentity().getCi();
-                } else if (cell0 instanceof CellInfoWcdma) {
-                    cellid = ((CellInfoWcdma) cell0).getCellIdentity().getCid();
                 }
+
+
             }
 
-            monTextView2.setText(String.valueOf(cellid));
+            cellidTextView.setText(String.valueOf(cellid));
 
 
             long timestamp = System.currentTimeMillis();

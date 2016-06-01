@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">CellIdOnDemand</string>
-    <string name="bouton_text">default_text</string>
-    <string name="bouton_text2">default_text2</string>
+    <string name="text_cellinfo">CellInfo en attente</string>
+    <string name="bouton_text2">CellID</string>
+    <string name="titre_cellid">CellID: </string>
+    <string name="titre_n_cells">cellinfo size: </string>
+    <string name="titre_n_bdd">bdd size: </string>
+    <string name="text_n_cells">0</string>
+    <string name="text_n_bdd">0</string>
+    <string name="action_settings">Settings</string>
 </resources>
