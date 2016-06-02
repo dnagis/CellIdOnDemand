@@ -1,9 +1,12 @@
 package dnagis.cellidondemand;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.CellInfo;
@@ -44,11 +47,16 @@ public class MainActivity extends Activity {
             //telph.getSimState();//ne détecte pas le mode avion: 5 tout le temps
             int mode_avion = Settings.System.getInt(this.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0); // =1 si mode avion (fait planter je sais pas quoi mais
             //je suppose getAllCellInfo() ou cellinfo.get(0)?
+            int cellid = -1; //par défault
 
-            int cellid = -1;
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION); //depuis API23 les permissions au runtime... sigh...
+            if (permissionCheck == PackageManager.PERMISSION_DENIED)
+                cellid = -18;
 
-            if (mode_avion != 1) {
-                List<CellInfo> cellinfo = telph.getAllCellInfo();
+
+
+            if ((mode_avion != 1) && (permissionCheck == PackageManager.PERMISSION_GRANTED)) {
+                    List<CellInfo> cellinfo = telph.getAllCellInfo();
                 //dans le métro quand cartes sims activées mais aucun signal ça plante... je suspecte soit cellinfo null (cellinfo != null)-pas suffisant soit size=0
                 if (cellinfo.size() > 0) {
                     cellinfosizeTextView.setText(String.valueOf(cellinfo.size()));
