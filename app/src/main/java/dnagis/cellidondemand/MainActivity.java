@@ -49,8 +49,8 @@ public class MainActivity extends Activity {
 
             if (mode_avion != 1) {
                 List<CellInfo> cellinfo = telph.getAllCellInfo();
-                //dans le métro quand cartes sims activées mais aucun signal ça plante... je suspecte soit cellinfo null soit size=0
-                if (cellinfo != null) {
+                //dans le métro quand cartes sims activées mais aucun signal ça plante... je suspecte soit cellinfo null (cellinfo != null)-pas suffisant soit size=0
+                if (cellinfo.size() > 0) {
                     cellinfosizeTextView.setText(String.valueOf(cellinfo.size()));
                     CellInfo cell0 = cellinfo.get(0);
                     allcellinfoTextView.setText(cell0.toString());
