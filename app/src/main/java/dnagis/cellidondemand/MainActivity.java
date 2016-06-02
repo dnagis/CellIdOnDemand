@@ -73,6 +73,8 @@ public class MainActivity extends Activity {
                         cellid = ((CellInfoWcdma) cell0).getCellIdentity().getCid();
                     }
 
+                } else {
+                    cellid = 0; //code pour se rappeler que cellid est vide (genre métro)
                 }
 
 
