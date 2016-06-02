@@ -11,12 +11,14 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <!-- si tu fais pas minSdkVersion tu tombes en API 23 et les permissions: il faut autoriser Location à chaque nouvelle install
+                en allant dans paramètres-->
+                <uses-sdk android:minSdkVersion="14"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-<!-- Sur le tel il faut maintenant aller dans paramètres et dans autorisations cocher location!!!! -->
+<!-- Sur le tel il faut maintenant aller dans paramètres et dans autorisations cocher location!!!! Je suspecte que depuis -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
