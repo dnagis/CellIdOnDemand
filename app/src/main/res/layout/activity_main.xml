@@ -6,6 +6,16 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     >
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GetAllCellInfo !!"
+        android:id="@+id/button"
+        android:onClick="actionBouton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#ffff7f4d" />
+
     <TextView android:text="@string/text_cellinfo" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15dp"
@@ -32,36 +42,83 @@
         android:layout_height="wrap_content"
         android:textSize="30dp"
         android:id="@+id/titre_cellid"
-        android:layout_above="@+id/titre_n_bdd"
+        android:layout_above="@+id/titre_lac"
         android:layout_alignParentLeft="true"
         />
 
-    <TextView android:text="@string/bouton_text2" android:layout_width="wrap_content"
+    <TextView android:text="@string/text_cellid" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
         android:id="@+id/text_cellid"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/titre_cellid"/>
 
-    <TextView android:text="@string/titre_n_bdd" android:layout_width="wrap_content"
+    <TextView android:text="@string/titre_lac" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:id="@+id/titre_n_bdd"
+        android:id="@+id/titre_lac"
+        android:layout_above="@+id/titre_mcc"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView android:text="@string/text_lac" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/text_lac"
+        android:layout_alignTop="@+id/titre_lac"
+        android:layout_alignParentRight="true" />
+
+
+
+    <TextView android:text="@string/titre_mcc" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/titre_mcc"
+        android:layout_above="@+id/titre_mnc"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView android:text="@string/text_mcc" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/text_mcc"
+        android:layout_alignTop="@+id/titre_mcc"
+        android:layout_alignParentRight="true" />
+
+
+
+    <TextView android:text="@string/titre_mnc" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/titre_mnc"
+        android:layout_above="@+id/titre_radio"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView android:text="@string/text_mnc" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/text_mnc"
+        android:layout_alignTop="@+id/titre_mnc"
+        android:layout_alignParentRight="true" />
+
+
+    <TextView android:text="@string/titre_radio" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:id="@+id/titre_radio"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         />
 
-
-
-
-    <Button
-        android:layout_width="wrap_content"
+    <TextView android:text="@string/text_radio" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GetAllCellInfo !!"
-        android:id="@+id/button"
-        android:onClick="actionBouton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="#ffff7f4d" />
+        android:textSize="30dp"
+        android:id="@+id/text_radio"
+        android:layout_alignTop="@+id/titre_radio"
+        android:layout_alignParentRight="true" />
+
+
+
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
+import android.support.annotation.IntegerRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoWcdma;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,6 +33,11 @@ public class MainActivity extends Activity {
             TextView allcellinfoTextView = (TextView)findViewById(R.id.text_cellinfo);
             TextView cellidTextView = (TextView)findViewById(R.id.text_cellid);
             TextView cellinfosizeTextView = (TextView)findViewById(R.id.text_n_cells);
+            TextView lacTextView = (TextView)findViewById(R.id.text_lac);
+            TextView mccTextView = (TextView)findViewById(R.id.text_mcc);
+            TextView mncTextView = (TextView)findViewById(R.id.text_mnc);
+            TextView radioTextView = (TextView)findViewById(R.id.text_radio);
+
             ContentValues values = new ContentValues();
 
 
@@ -48,6 +55,11 @@ public class MainActivity extends Activity {
             int mode_avion = Settings.System.getInt(this.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0); // =1 si mode avion (fait planter je sais pas quoi mais
             //je suppose getAllCellInfo() ou cellinfo.get(0)?
             int cellid = -1; //par défault
+            int lac = -1;
+            int mnc = -1;
+            int mcc = -1;
+            String radio = "unknown";
+
 
             int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION); //depuis API23 les permissions au runtime... sigh...
             if (permissionCheck == PackageManager.PERMISSION_DENIED)
@@ -56,6 +68,7 @@ public class MainActivity extends Activity {
 
 
             if ((mode_avion != 1) && (permissionCheck == PackageManager.PERMISSION_GRANTED)) {
+                //http://www.programcreek.com/java-api-examples/index.php?api=android.telephony.CellInfo
                     List<CellInfo> cellinfo = telph.getAllCellInfo();
                 //dans le métro quand cartes sims activées mais aucun signal ça plante... je suspecte soit cellinfo null (cellinfo != null)-pas suffisant soit size=0
                 if (cellinfo.size() > 0) {
@@ -65,12 +78,29 @@ public class MainActivity extends Activity {
 
                     if (cell0 instanceof CellInfoGsm) {
                         cellid = ((CellInfoGsm) cell0).getCellIdentity().getCid();
-                    } else if (cell0 instanceof CellInfoCdma) {
+                        lac = ((CellInfoGsm) cell0).getCellIdentity().getLac();
+                        mnc = ((CellInfoGsm) cell0).getCellIdentity().getMnc();
+                        mcc = ((CellInfoGsm) cell0).getCellIdentity().getMcc();
+                        radio = "GSM";
+                    } else if (cell0 instanceof CellInfoCdma) { //2g ??
                         cellid = ((CellInfoCdma) cell0).getCellIdentity().getBasestationId();
-                    } else if (cell0 instanceof CellInfoLte) {
+                        radio = "CDMA";
+                    } else if (cell0 instanceof CellInfoLte) { //4G??
                         cellid = ((CellInfoLte) cell0).getCellIdentity().getCi();
-                    } else if (cell0 instanceof CellInfoWcdma) {
+                        mnc = ((CellInfoLte) cell0).getCellIdentity().getMnc();
+                        mcc = ((CellInfoLte) cell0).getCellIdentity().getMcc();
+                        lac = ((CellInfoLte) cell0).getCellIdentity().getTac();
+                        //String lacz = cell0.toString();
+                        radio = "LTE";
+                        //Log.d("vincent",String.valueOf(cell0.toString()));
+                        //Log.d("vincent", Integer.toString(j));
+
+                    } else if (cell0 instanceof CellInfoWcdma) { //3G? UMTS?
                         cellid = ((CellInfoWcdma) cell0).getCellIdentity().getCid();
+                        lac = ((CellInfoWcdma) cell0).getCellIdentity().getLac();
+                        mnc = ((CellInfoWcdma) cell0).getCellIdentity().getMnc();
+                        mcc = ((CellInfoWcdma) cell0).getCellIdentity().getMcc();
+                        radio = "UMTS";
                     }
 
                 } else {
@@ -81,9 +111,13 @@ public class MainActivity extends Activity {
             }
 
             cellidTextView.setText(String.valueOf(cellid));
+            lacTextView.setText(String.valueOf(lac));
+            mccTextView.setText(String.valueOf(mcc));
+            mncTextView.setText(String.valueOf(mnc));
+            radioTextView.setText(String.valueOf(radio));
 
 
-            long timestamp = System.currentTimeMillis();
+            //long timestamp = System.currentTimeMillis();
             //Log.d("vincent_time",String.valueOf(timestamp));
 
        /* @Override
